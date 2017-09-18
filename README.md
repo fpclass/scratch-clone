@@ -1,2 +1,3 @@
-# cswk2
-Second coursework for CS256
+# Scratch clone
+
+Second coursework for CS256.
