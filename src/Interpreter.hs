@@ -17,6 +17,8 @@ type Memory = [(String, Int)]
 -- | Enumerates reasons for errors.
 data Err
     = DivByZeroError                    -- ^ Division by zero was attempted.
+    | NegativeExponentError             -- ^ Raising a number to a negative
+                                        -- exponent was attempted.
     | UninitialisedMemory String        -- ^ Tried to read from a variable
                                         -- that does not exist.
     deriving (Eq, Show)
