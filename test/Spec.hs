@@ -28,7 +28,7 @@ instance Arbitrary Expr where
                 return (ValE n)
             arbExpr n = do
                 m <- elements [0..n-1]
-                op <- arbitrary `suchThat` (/=) Div
+                op <- arbitrary `suchThat` (`notElem` [Div,Pow])
                 l <- arbExpr (n-1-m)
                 r <- arbExpr m
                 return $ BinOpE op l r
@@ -112,6 +112,9 @@ main = do
             it "handles division by zero" $
                 interpret [AssignStmt "x" (BinOpE Div (ValE 42) (ValE 0))] []
                 `shouldBe` Left DivByZeroError
+            it "handles negative exponents" $
+                interpret [AssignStmt "x" (BinOpE Pow (ValE 42) (ValE (-1)))] []
+                `shouldBe` Left NegativeExponentError
             it "handles uninitialised memory" $
                 interpret [AssignStmt "y" (VarE "x")] []
                 `shouldBe` Left (UninitialisedMemory "x")
