@@ -1,3 +1,3 @@
 # Scratch clone
 
-Second coursework for CS256.
+Second coursework for CS141.

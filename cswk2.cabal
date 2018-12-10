@@ -2,10 +2,10 @@ name:                cswk2
 version:             1.0.0.0
 -- synopsis:
 -- description:
-homepage:            http://www2.warwick.ac.uk/fac/sci/dcs/teaching/modules/cs256/
+homepage:            http://www2.warwick.ac.uk/fac/sci/dcs/teaching/modules/cs141/
 author:              Michael B. Gale
 maintainer:          m.gale@warwick.ac.uk
-copyright:           2017 Michael B. Gale
+copyright:           2018 Michael B. Gale
 build-type:          Simple
 cabal-version:       >=1.10
 extra-source-files:  README.md
@@ -37,7 +37,7 @@ executable scratch-clone
     servant-server >= 0.11,
     text >= 1.2,
     bytestring >= 0.10,
-    aeson >= 1.1 && < 1.2,
+    aeson >= 1.1,
     xml-conduit >= 1.5,
     html-conduit,
     containers,
