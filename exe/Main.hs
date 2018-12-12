@@ -29,7 +29,7 @@ import              WaiAppStatic.Types
 import              WaiAppStatic.Storage.Filesystem
 
 import              Servant
-import              Servant.Utils.StaticFiles
+import              Servant.Server.StaticFiles
 
 import              Convert
 import              Interpreter
