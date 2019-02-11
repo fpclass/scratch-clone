@@ -64,4 +64,4 @@ benchmark cswk2-bench
 
 source-repository head
   type:     git
-  location: https://github.com/cs256/cswk2
+  location: https://github.com/fpclass/cswk2
