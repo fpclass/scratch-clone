@@ -65,14 +65,12 @@ $(document).ready(function() {
             } else if (data.error) {
                 addMessage("Something has gone wrong: " + data.error);
             } else {
-                 addMessage("Something has gone wrong.");
+                addMessage("Something has gone wrong.");
             }
         })
         .fail(function(data) {
             console.error(data);
-            addMessage(
-                "Something has gone wrong. See the console for details."
-            );
+            addMessage("Something has gone wrong. See the console for details.");
         });
     });
 
