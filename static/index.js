@@ -88,7 +88,7 @@ $(document).ready(function() {
         var reader = new FileReader();
         reader.addEventListener("loadend", function() {
             var xml = Blockly.Xml.textToDom(reader.result); console.log(xml);
-            if(xml.firstChild === null) {
+            if (xml.firstChild === null) {
                 alert("Invalid file.");
             } else {
                 Blockly.Xml.domToWorkspace(workspace, xml);
@@ -99,7 +99,7 @@ $(document).ready(function() {
     });
 
     $("#exportButton").click(function() {
-        if(!checkFileApiSupport()) {
+        if (!checkFileApiSupport()) {
             return;
         }
 
@@ -111,7 +111,7 @@ $(document).ready(function() {
 
     function checkFileApiSupport() {
         var isConformant = window.Blob && window.FileReader;
-        if(!isConformant) {
+        if (!isConformant) {
             alert("Your browser does not support the HTML File API. Importing/exporting will not work.");
         }
         return isConformant;
