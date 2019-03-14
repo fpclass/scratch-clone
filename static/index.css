@@ -9,7 +9,6 @@ body {
 }
 
 header {
-    z-index: 999;
     padding: 20px;
     background-color: #2c1e37;
     box-shadow:
@@ -53,4 +52,8 @@ main {
 
 #output .variable .name {
     border-right: 1px solid black;
+}
+
+xml {
+    display: none;
 }
