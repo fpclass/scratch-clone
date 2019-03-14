@@ -17,6 +17,16 @@ header {
     text-align: right;
 }
 
+#importExportBox {
+    padding-right: 20px;
+}
+input[type=file] {
+    display: none;
+}
+input[type=file].importing {
+    display: inline;
+}
+
 main {
     height: calc(100% - 64px);
 }

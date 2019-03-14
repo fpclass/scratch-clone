@@ -17,8 +17,6 @@ $(document).ready(function() {
         toolbox: $("#toolbox")[0]
     });
 
-    Blockly.svgResize(workspace);
-
     Blockly.Xml.domToWorkspace(workspace, $("#template")[0]);
 
     var onchange = function(e) {};
@@ -76,4 +74,45 @@ $(document).ready(function() {
             );
         });
     });
+
+    $("#importButton").click(function() {
+        if(!checkFileApiSupport()) {
+            return;
+        }
+
+        $("#importInput").toggleClass("importing");
+    });
+
+    $("#importInput").on('change', function() {
+        var reader = new FileReader();
+        reader.addEventListener("loadend", function() {
+            var xml = Blockly.Xml.textToDom(reader.result); console.log(xml);
+            if(xml.firstChild === null) {
+                alert("Invalid file.");
+            } else {
+                Blockly.Xml.domToWorkspace(workspace, xml);
+            }
+            $("#importInput").toggleClass("importing");
+        });
+        reader.readAsText(document.getElementById('importInput').files[0]);
+    });
+
+    $("#exportButton").click(function() {
+        if(!checkFileApiSupport()) {
+            return;
+        }
+
+        var xml = Blockly.Xml.workspaceToDom(workspace);
+        var blob = new Blob([ Blockly.Xml.domToText(xml) ], { type: 'application/octet-stream' });
+        var url = URL.createObjectURL(blob);
+        window.open(url);
+    });
+
+    function checkFileApiSupport() {
+        var isConformant = window.Blob && window.FileReader;
+        if(!isConformant) {
+            alert("Your browser does not support the HTML File API. Importing/exporting will not work.");
+        }
+        return isConformant;
+    }
 });
