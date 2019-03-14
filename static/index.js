@@ -10,7 +10,7 @@ $(document).ready(function() {
         }
     };
 
-    var blocklyDiv = $("main")[0];
+    var blocklyDiv = $("#blocklyDiv")[0];
     var workspace = Blockly.inject(blocklyDiv, {
         oneBasedIndex: false,
         media: "./static/google-blockly/media/",
