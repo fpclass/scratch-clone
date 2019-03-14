@@ -28,7 +28,7 @@ input[type=file].importing {
 }
 
 main {
-    height: calc(100% - 64px);
+    flex: 1;
 }
 
 #compiledCode {
