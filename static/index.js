@@ -88,7 +88,7 @@ $(document).ready(function() {
         var reader = new FileReader();
         reader.addEventListener("loadend", function() {
             var xml = Blockly.Xml.textToDom(reader.result); console.log(xml);
-            if (xml.firstChild === null) {
+            if (xml.ownerDocument.getElementsByTagName('parsererror').length > 0) {
                 alert("Invalid file.");
             } else {
                 Blockly.Xml.domToWorkspace(workspace, xml);
