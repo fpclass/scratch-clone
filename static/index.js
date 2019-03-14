@@ -7,6 +7,7 @@ $(document).ready(function() {
             this.setColour(230);
             this.setTooltip("Main entry point to the program");
             this.setHelpUrl("");
+            this.setDeletable(false);
         }
     };
 
