@@ -1,79 +1,23 @@
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Scratch Clone - CS141</title>
     <script src="static/jquery-3.2.1.min.js"></script>
     <script src="static/google-blockly/blockly_compressed.js"></script>
     <script src="static/google-blockly/blocks_compressed.js"></script>
     <script src="static/google-blockly/msg/js/en.js"></script>
-    <style>
-        body {
-            padding: 0;
-            margin: 0;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-
-        #controls {
-            z-index: 999;
-            padding: 20px;
-            background-color: #2c1e37;
-            box-shadow:
-                rgba(0, 0, 0, 0.137255) 0px 0px 4px 0px,
-                rgba(0, 0, 0, 0.278431) 0px 4px 8px 0px;
-            text-align: right;
-        }
-
-        #editor {
-            flex: 1;
-            display: flex;
-            flex-direction: row;
-        }
-
-        #compiledCode {
-            border-bottom: 1px solid #c6c6c6;
-        }
-
-        #output {
-            overflow-y: scroll;
-            height: 200px;
-            font-family: sans-serif;
-        }
-
-        #output .message {
-            width: 100%;
-            padding-top: 50px;
-            text-align: center;
-        }
-
-        #output .variable {
-            display: flex;
-            flex-direction: row;
-
-            font-size: 20pt;
-            border-bottom: 1px solid black;
-        }
-
-        #output .variable div {
-            flex: 1;
-            padding: 20px;
-        }
-
-        #output .variable .name {
-            border-right: 1px solid black;
-        }
-    </style>
+    <link rel="stylesheet" href="static/index.css">
 </head>
 <body style="padding: 0; margin: 0;">
-    <div id="controls">
+    <header>
         <button id="runButton">Evaluate</button>
-    </div>
-    <div id="editor">
-        <div id="blocklyArea" style="flex: 1;">
-            <div id="blocklyDiv" style="position: absolute;"></div>
-        </div>
-    </div>
+    </header>
+    
+    <!-- Blockly area -->
+    <main></main>
+
     <div id="output">
         <div class="message">Output will appear here.</div>
     </div>
@@ -97,109 +41,7 @@
         <block type="entry_point" x="200" y="50">
         </block>
     </xml>
-
-    <script>
-        $(document).ready(function () {
-            Blockly.Blocks['math_change'] = null;
-            Blockly.Blocks['entry_point'] = {
-              init: function() {
-                this.appendDummyInput()
-                    .appendField("Start");
-                this.setNextStatement(true, null);
-                this.setColour(230);
-                this.setTooltip("Main entry point to the program");
-                this.setHelpUrl("");
-              }
-            };
-
-            var blocklyArea = $('#blocklyArea')[0];
-            var blocklyDiv = $('#blocklyDiv')[0];
-            var workspace = Blockly.inject(blocklyDiv, {
-                oneBasedIndex: false,
-                media: './static/google-blockly/media/',
-                toolbox: $('#toolbox')[0]
-            });
-            var onresize = function(e) {
-                console.debug('onresize');
-              // Compute the absolute coordinates and dimensions of blocklyArea.
-              var element = blocklyArea;
-              var x = 0;
-              var y = 0;
-              do {
-                x += element.offsetLeft;
-                y += element.offsetTop;
-                element = element.offsetParent;
-              } while (element);
-              // Position blocklyDiv over blocklyArea.
-              blocklyDiv.style.left = x + 'px';
-              blocklyDiv.style.top = y + 'px';
-              blocklyDiv.style.width = blocklyArea.offsetWidth + 'px';
-              blocklyDiv.style.height = blocklyArea.offsetHeight + 'px';
-            };
-            $(window).resize(onresize);
-            onresize();
-            Blockly.svgResize(workspace);
-
-            Blockly.Xml.domToWorkspace(workspace, $('#template')[0]);
-
-            var onchange = function(e) {
-
-            };
-
-            workspace.addChangeListener(onchange);
-
-            var $output = $('#output');
-
-            function addMessage(message) {
-                var $message = $('<div class="message"></div>');
-                $message.text(message);
-
-                $output.append($message);
-            };
-
-            $('#runButton').click(function () {
-                $output.children().remove();
-
-                var xml = Blockly.Xml.workspaceToDom(workspace);
-
-                $.ajax({
-                    method: 'POST',
-                    url: './run/',
-                    contentType: 'text/xml',
-                    dataType: 'json',
-                    data: Blockly.Xml.domToText(xml)
-                }).done(function (data) {
-                    if(data.memory) {
-                        if(data.memory.length == 0) {
-                            addMessage('No variables to display.')
-                        }
-                        else {
-                            $.each(data.memory, function (i, cell) {
-                                var $cell = $('<div class="variable"></div>');
-                                var $addr = $('<div class="name"></div>');
-                                var $val  = $('<div class="value"></div>');
-
-                                $addr.text(cell[0]);
-                                $val.text(cell[1]);
-
-                                $cell.append($addr);
-                                $cell.append($val);
-                                $output.append($cell);
-                            });
-                        }
-                    }
-                    else if(data.error) {
-                        addMessage('Something has gone wrong: ' + data.error);
-                    }
-                    else {
-                        addMessage('Something has gone wrong.');
-                    }
-                }).fail(function (data) {
-                    console.error(data);
-                    addMessage('Something has gone wrong. See the console for details.')
-                });
-            });
-        });
+    <script src="static/index.js">
     </script>
 </body>
 </html>
