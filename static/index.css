@@ -20,10 +20,17 @@ header {
 #importExportBox {
     padding-right: 20px;
 }
-input[type=file] {
-    display: none;
+#importButton::before {
+    content: 'Import';
 }
-input[type=file].importing {
+.importing #importButton::before {
+    content: 'Cancel Import';
+}
+input[type=file] {
+    display: none; color: #fff;
+}
+
+.importing input[type=file] {
     display: inline;
 }
 
