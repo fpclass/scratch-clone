@@ -79,7 +79,7 @@ $(document).ready(function() {
             return;
         }
 
-        $("#importInput").toggleClass("importing");
+        $("#importExportBox").toggleClass("importing");
     });
 
     $("#importInput").on('change', function() {
@@ -91,7 +91,7 @@ $(document).ready(function() {
             } else {
                 Blockly.Xml.domToWorkspace(workspace, xml);
             }
-            $("#importInput").toggleClass("importing");
+            $("#importExportBox").toggleClass("importing");
         });
         reader.readAsText(document.getElementById('importInput').files[0]);
     });
