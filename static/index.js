@@ -103,8 +103,7 @@ $(document).ready(function() {
 
         var xml = Blockly.Xml.workspaceToDom(workspace);
         var blob = new Blob([ Blockly.Xml.domToText(xml) ], { type: 'application/octet-stream' });
-        var url = URL.createObjectURL(blob);
-        window.open(url);
+        saveAs(blob, 'scratch-program.xml');
     });
 
     function checkFileApiSupport() {
