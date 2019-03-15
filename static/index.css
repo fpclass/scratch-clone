@@ -27,7 +27,8 @@ header {
     content: 'Cancel Import';
 }
 input[type=file] {
-    display: none; color: #fff;
+    display: none;
+    color: #fff;
 }
 
 .importing input[type=file] {
