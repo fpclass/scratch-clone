@@ -18,21 +18,35 @@ header {
 }
 
 #importExportBox {
+    display: inline-block;
     padding-right: 20px;
 }
-#importButton::before {
-    content: 'Import';
+#importBox {
+    display: none;
+    position: absolute;
+    left: auto;
+    transform: translate(-128px, 54px);
+    padding: 20px;
+    z-index: 99;
+}
+#importBox,
+#importBox::before {
+    background: #fff;
+    border: #e3e3e3 1px solid;
+}
+#importBox::before {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-width: 1px 0 0 1px;
+    transform: translate(160px, -28px) rotate(45deg);
+}
+.importing #importBox {
+    display: block;
 }
 .importing #importButton::before {
-    content: 'Cancel Import';
-}
-input[type=file] {
-    display: none;
-    color: #fff;
-}
-
-.importing input[type=file] {
-    display: inline;
+    content: 'Cancel ';
 }
 
 main {
