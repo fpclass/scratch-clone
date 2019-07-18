@@ -4,12 +4,12 @@
 --------------------------------------------------------------------------------
 
 {-# LANGUAGE StandaloneDeriving, DeriveGeneric #-}
+{-# OPTIONS_GHC -Wno-orphans #-}
 
 import Criterion.Main
 
 import Control.DeepSeq
 
-import Data.List
 import GHC.Generics
 
 import Language

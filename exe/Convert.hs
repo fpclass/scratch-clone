@@ -12,10 +12,7 @@ module Convert where
 
 --------------------------------------------------------------------------------
 
-import           Control.Exception.Base
 import           Control.Monad
-import           Control.Monad.Reader
-import           Control.Monad.State
 import           Control.Monad.Trans.Except
 
 import qualified Data.ByteString.Lazy           as BS
@@ -162,6 +159,7 @@ parseBinOp e = do
         toOp "LTE"      = LessOrEqual
         toOp "GT"       = GreaterThan
         toOp "GTE"      = GreaterOrEqual
+        toOp _          = error "(toOp) Unknown operator"
 
 parseEntryPoint :: Parser Element Program
 parseEntryPoint = parseNext
@@ -222,7 +220,7 @@ parseExpr e@(Element {..}) = case M.lookup "id" elementAttributes of
     Nothing -> fail $
         "Block " ++ unpack (nameLocalName elementName) ++
         " is missing attribute: id"
-    Just i  -> case M.lookup "type" elementAttributes of
+    Just _  -> case M.lookup "type" elementAttributes of
         Nothing -> fail "Block is missing attribute: type"
         Just ty -> parseExprTy ty e
 
@@ -232,7 +230,7 @@ parseStmt e@(Element {..}) = case M.lookup "id" elementAttributes of
     Nothing -> fail $
         "Block " ++ unpack (nameLocalName elementName) ++
         " is missing attribute: id"
-    Just i  -> case M.lookup "type" elementAttributes of
+    Just _  -> case M.lookup "type" elementAttributes of
         Nothing -> fail "Block is missing attribute: type"
         Just ty -> parseStmtTy ty e
 

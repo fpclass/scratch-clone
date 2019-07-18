@@ -4,8 +4,7 @@
 --------------------------------------------------------------------------------
 
 {-# LANGUAGE ScopedTypeVariables #-}
-
-import Control.Monad
+{-# OPTIONS_GHC -Wno-orphans #-}
 
 import Data.List
 

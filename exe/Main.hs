@@ -16,11 +16,9 @@ module Main where
 --------------------------------------------------------------------------------
 
 import              Control.Concurrent
-import              Control.Monad.IO.Class
+import              Control.Monad
 
 import              Data.Aeson
-import qualified    Data.ByteString.Lazy                as L
-import qualified    Data.Map                            as Map
 
 import qualified    Network.HTTP.Media                  as M
 import              Network.Wai.Handler.Warp                        (run)
@@ -29,7 +27,6 @@ import              WaiAppStatic.Types
 import              WaiAppStatic.Storage.Filesystem
 
 import              Servant
-import              Servant.Server.StaticFiles
 
 import              Convert
 import              Interpreter
@@ -98,7 +95,7 @@ main = do
     putStrLn "Starting web server..."
     tid <- forkIO $ run 8000 scratchApp
     putStrLn "Started. Press any key to quit."
-    getChar
+    void getChar
     killThread tid
 
 --------------------------------------------------------------------------------
