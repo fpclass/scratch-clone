@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 092f1c983a95826f9923e961fef81aa4fe69dc803a4ba4408297840953f49cc1
+-- hash: 9c43eaa68e38515f5659f73a328074284b24a14f49dc021fe91bffcd5f20487b
 
 name:           scratch-clone
 version:        1.1.0.0
@@ -66,7 +66,7 @@ executable scratch-server
 
 test-suite scratch-test
   type: exitcode-stdio-1.0
-  main-is: Spec.hs
+  main-is: Tests.hs
   other-modules:
       Paths_scratch_clone
   hs-source-dirs:
@@ -76,9 +76,12 @@ test-suite scratch-test
       QuickCheck
     , base
     , containers
-    , hspec
     , mtl
     , scratch-clone
+    , tasty
+    , tasty-ant-xml
+    , tasty-hunit
+    , tasty-quickcheck
     , transformers
   default-language: Haskell2010
 

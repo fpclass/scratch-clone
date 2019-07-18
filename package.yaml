@@ -54,7 +54,7 @@ executables:
 
 tests:
   scratch-test:
-    main:                Spec.hs
+    main:                Tests.hs
     source-dirs:         test
     ghc-options:
     - -threaded
@@ -64,7 +64,10 @@ tests:
     - -O2
     dependencies:
     - scratch-clone
-    - hspec
+    - tasty
+    - tasty-hunit
+    - tasty-quickcheck
+    - tasty-ant-xml
     - QuickCheck
 
 benchmarks:
