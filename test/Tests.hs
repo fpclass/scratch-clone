@@ -23,6 +23,9 @@ import Interpreter
 instance Arbitrary Op where
     arbitrary = elements [minBound..maxBound]
 
+safeOps :: [Op]
+safeOps = [op | op <- [minBound..maxBound], op /= Div, op /= Pow]
+
 instance Arbitrary Expr where
     arbitrary = resize 10 $ sized arbExpr
         where
@@ -32,7 +35,7 @@ instance Arbitrary Expr where
                 return (ValE n)
             arbExpr n = do
                 m <- elements [0..n-1]
-                op <- arbitrary `suchThat` (`notElem` [Div,Pow])
+                op <- elements safeOps
                 l <- arbExpr (n-1-m)
                 r <- arbExpr m
                 return $ BinOpE op l r
@@ -46,6 +49,13 @@ isSuccessful _         = False
 hasMemory :: Memory -> Either Err Memory -> Bool
 hasMemory xs (Right ys) = all (`elem` ys) xs
 hasMemory _  _          = False
+
+-- | `terminates` @result@ essentially does nothing except pattern-match on 
+-- @result@. If pattern-matching succeeds (i.e. the computation calculating
+-- the argument terminates), `True` is returned.
+terminates :: Either a b -> Bool 
+terminates (Left _)  = True
+terminates (Right _) = True
 
 --------------------------------------------------------------------------------
 
@@ -117,12 +127,12 @@ fib n =
 
 -- | The tests.
 tests :: TestTree
-tests = testGroup "Interpreter.interpret" 
+tests = localOption (Timeout (5*1000000) "5s") $ testGroup "Interpreter.interpret" 
     [
         testCase "handles the empty program" $
-            isSuccessful (interpret [] []) @?= True
+        isSuccessful (interpret [] []) @?= True
     ,   QC.testProperty "stores values in memory" $ \(x :: Int) ->
-            hasMemory [("x",x)] $ interpret [AssignStmt "x" (ValE x)] []
+        hasMemory [("x",x)] $ interpret [AssignStmt "x" (ValE x)] []
     ,   QC.testProperty "loads values from memory" $ \(x :: Int) ->
         hasMemory [("x",x),("y",x)] $ interpret [AssignStmt "y" (VarE "x")] [("x",x)]
     ,   QC.testProperty "memory only contains one entry per variable after multiple assignments" $
@@ -149,7 +159,7 @@ tests = testGroup "Interpreter.interpret"
     ,   QC.testProperty "implements repeat" $ \(Positive n) ->
         hasMemory [("x",n)] $ interpret (repeatTest n) [("x", 0)]
     ,   QC.testProperty "repeat condition can contain arbitrary expressions" $ \expr ->
-        isSuccessful $ interpret (repeatArbitraryTest expr) [("x", 0)]
+        terminates $ interpret (repeatArbitraryTest expr) [("x", 0)]
     ,   QC.testProperty "repeat correctly handles exceptions in condition" $ \(x :: Int) ->
              interpret [RepeatStmt (BinOpE Div (ValE x) (ValE 0)) []] []
              === Left DivByZeroError
