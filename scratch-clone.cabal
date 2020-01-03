@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 9c43eaa68e38515f5659f73a328074284b24a14f49dc021fe91bffcd5f20487b
+-- hash: 69990bffb0f1a942c88137a5ffe633afcfffbbdce6253ba12de063aa879b1856
 
 name:           scratch-clone
 version:        1.1.0.0
@@ -13,7 +13,7 @@ homepage:       http://www2.warwick.ac.uk/fac/sci/dcs/teaching/modules/cs141/
 bug-reports:    https://github.com/fpclass/scratch-clone/issues
 author:         Michael B. Gale
 maintainer:     m.gale@warwick.ac.uk
-copyright:      2017-2019 Michael B. Gale
+copyright:      2017-2020 Michael B. Gale
 license:        MIT
 build-type:     Simple
 extra-source-files:
@@ -45,7 +45,7 @@ executable scratch-server
       Paths_scratch_clone
   hs-source-dirs:
       exe
-  ghc-options: -threaded -rtsopts -with-rtsopts=-N -Wall -O2
+  ghc-options: -threaded -rtsopts -Wall -O2
   build-depends:
       aeson
     , base
@@ -71,7 +71,7 @@ test-suite scratch-test
       Paths_scratch_clone
   hs-source-dirs:
       test
-  ghc-options: -threaded -rtsopts -with-rtsopts=-N -Wall -O2
+  ghc-options: -threaded -rtsopts -Wall -O2
   build-depends:
       QuickCheck
     , base
@@ -92,7 +92,7 @@ benchmark scratch-benchmark
       Paths_scratch_clone
   hs-source-dirs:
       bench
-  ghc-options: -threaded -rtsopts -with-rtsopts=-N -Wall -O2
+  ghc-options: -threaded -rtsopts -Wall -O2
   build-depends:
       base
     , containers
