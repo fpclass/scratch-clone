@@ -4,7 +4,7 @@ github:              "fpclass/scratch-clone"
 license:             MIT
 author:              "Michael B. Gale"
 maintainer:          "m.gale@warwick.ac.uk"
-copyright:           "2017-2019 Michael B. Gale"
+copyright:           "2017-2020 Michael B. Gale"
 homepage:            "http://www2.warwick.ac.uk/fac/sci/dcs/teaching/modules/cs141/"
 
 extra-source-files:
@@ -35,7 +35,6 @@ executables:
     ghc-options:
     - -threaded
     - -rtsopts
-    - -with-rtsopts=-N
     - -Wall
     - -O2
     dependencies:
@@ -59,7 +58,6 @@ tests:
     ghc-options:
     - -threaded
     - -rtsopts
-    - -with-rtsopts=-N
     - -Wall
     - -O2
     dependencies:
@@ -77,7 +75,6 @@ benchmarks:
     ghc-options:
     - -threaded
     - -rtsopts
-    - -with-rtsopts=-N
     - -Wall
     - -O2
     dependencies:
