@@ -29,7 +29,7 @@ library:
   source-dirs: src
 
 executables:
-  scratch-server:
+  scratch-clone:
     main:                Main.hs
     source-dirs:         exe
     ghc-options:
