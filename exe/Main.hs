@@ -11,25 +11,26 @@
 
 -- | This module contains the main entry point to the program and implements
 -- the web server.
-module Main where
+module Main ( main ) where
 
 --------------------------------------------------------------------------------
 
-import              Control.Concurrent
-import              Control.Monad
+import Control.Monad
 
-import              Data.Aeson
+import Data.Aeson
 
-import qualified    Network.HTTP.Media                  as M
-import              Network.Wai.Handler.Warp                        (run)
+import qualified Network.HTTP.Media as M
+import Network.Wai.Handler.Warp (withApplication)
 
-import              WaiAppStatic.Types
-import              WaiAppStatic.Storage.Filesystem
+import Text.Printf
 
-import              Servant
+import WaiAppStatic.Types
+import WaiAppStatic.Storage.Filesystem
 
-import              Convert
-import              Interpreter
+import Servant
+
+import Convert
+import Interpreter
 
 --------------------------------------------------------------------------------
 
@@ -93,9 +94,9 @@ scratchApp = serve scratchAPI scratchServer
 main :: IO ()
 main = do
     putStrLn "Starting web server..."
-    tid <- forkIO $ run 8000 scratchApp
-    putStrLn "Started. Press any key to quit."
-    void getChar
-    killThread tid
+    withApplication (pure scratchApp) $ \port -> do 
+        putStrLn $ printf "Started on http://localhost:%d" port
+        putStrLn "Press enter to quit."
+        void getChar
 
 --------------------------------------------------------------------------------
