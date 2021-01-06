@@ -12,18 +12,18 @@ module Convert where
 
 --------------------------------------------------------------------------------
 
-import           Control.Monad
-import           Control.Monad.Trans.Except
+import Control.Monad
+import Control.Monad.Trans.Except
 
-import qualified Data.ByteString.Lazy           as BS
-import           Data.Text                      hiding (concat)
-import qualified Data.Map                       as M
-import           Data.Maybe
+import qualified Data.ByteString.Lazy as BS
+import Data.Text hiding (concat)
+import qualified Data.Map as M
+import Data.Maybe
 
-import           Text.XML                       hiding (parseLBS)
-import           Text.HTML.DOM
+import Text.XML hiding (parseLBS)
+import Text.HTML.DOM
 
-import           Language
+import Language
 
 --------------------------------------------------------------------------------
 
@@ -78,7 +78,7 @@ node elemName attrName = listToMaybe . elements p
 -- | Returns the first field with the specified name.
 field :: Text -> Parser [Node] Text
 field n ns = case node "field" n ns of
-    Nothing -> fail $ "Missing field: " ++ unpack n
+    Nothing -> throwE $ "Missing field: " ++ unpack n
     Just e  -> content (elementNodes e)
 
 -- | Returns all values with the specified name.
@@ -104,7 +104,7 @@ mutations e = case element "mutation" (elementNodes e) of
 
 -- | Requires an optional parser to succeed.
 require :: String -> Parser (Maybe a) a
-require ex Nothing  = fail ex
+require ex Nothing  = throwE ex
 require _  (Just x) = return x
 
 -- | Runs an optional parser and requires it to succeed.
@@ -202,7 +202,7 @@ parseExprTy "math_number"     = parseMathNumber
 parseExprTy "math_arithmetic" = parseBinOp
 parseExprTy "logic_compare"   = parseBinOp
 parseExprTy "variables_get"   = parseVarGet
-parseExprTy ty                = const $ fail $
+parseExprTy ty                = const $ throwE $
     "Unknown block type: " ++ unpack ty
 
 -- | Parses the body of a statement block.
@@ -211,27 +211,27 @@ parseStmtTy "entry_point"         = parseEntryPoint
 parseStmtTy "variables_set"       = parseVarSet
 parseStmtTy "controls_repeat_ext" = parseRepeat
 parseStmtTy "controls_if"         = parseControlIf
-parseStmtTy ty = const $ fail $
+parseStmtTy ty = const $ throwE $
     "Unknown block type: " ++ unpack ty
 
 -- | Parses a block, including its header.
 parseExpr :: Parser Element Expr
 parseExpr e@(Element {..}) = case M.lookup "id" elementAttributes of
-    Nothing -> fail $
+    Nothing -> throwE $
         "Block " ++ unpack (nameLocalName elementName) ++
         " is missing attribute: id"
     Just _  -> case M.lookup "type" elementAttributes of
-        Nothing -> fail "Block is missing attribute: type"
+        Nothing -> throwE "Block is missing attribute: type"
         Just ty -> parseExprTy ty e
 
 -- | Parses a block, including its header.
 parseStmt :: Parser Element Program
 parseStmt e@(Element {..}) = case M.lookup "id" elementAttributes of
-    Nothing -> fail $
+    Nothing -> throwE $
         "Block " ++ unpack (nameLocalName elementName) ++
         " is missing attribute: id"
     Just _  -> case M.lookup "type" elementAttributes of
-        Nothing -> fail "Block is missing attribute: type"
+        Nothing -> throwE "Block is missing attribute: type"
         Just ty -> parseStmtTy ty e
 
 -- | Parses a Google Blockly document.
