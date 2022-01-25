@@ -1,14 +1,13 @@
-name:                scratch-clone
-version:             1.1.0.0
-github:              "fpclass/scratch-clone"
-license:             MIT
-author:              "Michael B. Gale"
-maintainer:          "m.gale@warwick.ac.uk"
-copyright:           "2017-2020 Michael B. Gale"
-homepage:            "http://www2.warwick.ac.uk/fac/sci/dcs/teaching/modules/cs141/"
+name: scratch-clone
+version: 2022.0.0.0
+github: "fpclass/scratch-clone"
+license: OtherLicense
+author: "Michael B. Gale"
+maintainer: "michael@fpclass.online"
+copyright: "Copyright 2022 Michael B. Gale"
 
 extra-source-files:
-- README.md
+  - README.md
 
 # Metadata used when publishing your package
 # synopsis:            Short description of your package
@@ -17,67 +16,67 @@ extra-source-files:
 # To avoid duplicated efforts in documentation and dealing with the
 # complications of embedding Haddock markup inside cabal files, it is
 # common to point users to the README.md file.
-description:         Please see the README on GitHub at <https://github.com/fpclass/scratch-clone#readme>
+description: Please see the README on GitHub at <https://github.com/fpclass/scratch-clone#readme>
 
 dependencies:
-- base
-- mtl
-- transformers
-- containers
+  - base
+  - mtl
+  - transformers
+  - containers
 
 library:
   source-dirs: src
 
 executables:
   scratch-clone:
-    main:                Main.hs
-    source-dirs:         exe
+    main: Main.hs
+    source-dirs: exe
     ghc-options:
-    - -threaded
-    - -rtsopts
-    - -Wall
-    - -O2
+      - -threaded
+      - -rtsopts
+      - -Wall
+      - -O2
     dependencies:
-    - scratch-clone
-    - http-media
-    - wai-app-static
-    - warp
-    - servant
-    - servant-server
-    - text
-    - bytestring
-    - aeson
-    - xml-conduit
-    - html-conduit
-    - containers
+      - scratch-clone
+      - http-media
+      - wai-app-static
+      - warp
+      - servant
+      - servant-server
+      - text
+      - bytestring
+      - aeson
+      - xml-conduit
+      - html-conduit
+      - containers
 
 tests:
   scratch-test:
-    main:                Tests.hs
-    source-dirs:         test
+    main: Tests.hs
+    source-dirs: test
     ghc-options:
-    - -threaded
-    - -rtsopts
-    - -Wall
-    - -O2
+      - -threaded
+      - -rtsopts
+      - -Wall
+      - -O2
     dependencies:
-    - scratch-clone
-    - tasty
-    - tasty-hunit
-    - tasty-quickcheck
-    - tasty-ant-xml
-    - QuickCheck
+      - scratch-clone
+      - tasty
+      - tasty-hunit
+      - tasty-quickcheck
+      - tasty-ant-xml
+      - QuickCheck
 
 benchmarks:
   scratch-benchmark:
-    main:                Main.hs 
-    source-dirs:         bench 
+    main: Main.hs
+    source-dirs: bench
     ghc-options:
-    - -threaded
-    - -rtsopts
-    - -Wall
-    - -O2
+      - -threaded
+      - -rtsopts
+      - -Wall
+      - -O2
     dependencies:
-    - scratch-clone
-    - criterion
-    - deepseq
+      - scratch-clone
+      - criterion
+      - deepseq

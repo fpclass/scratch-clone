@@ -1,6 +1,10 @@
 --------------------------------------------------------------------------------
--- Functional Programming (CS141)                                             --
--- Coursework 2: Scratch clone                                                --
+-- Functional Programming - Scratch Clone Project
+--------------------------------------------------------------------------------
+-- Copyright (c) 2022 Michael B. Gale (michael@fpclass.online)
+--
+-- This source code is subject to the terms and conditions found in the LICENSE
+-- file in the root directory of this source tree.
 --------------------------------------------------------------------------------
 
 {-# LANGUAGE DataKinds #-}
@@ -94,7 +98,7 @@ scratchApp = serve scratchAPI scratchServer
 main :: IO ()
 main = do
     putStrLn "Starting web server..."
-    withApplication (pure scratchApp) $ \port -> do 
+    withApplication (pure scratchApp) $ \port -> do
         putStrLn $ printf "Started on http://localhost:%d" port
         putStrLn "Press enter to quit."
         void getChar

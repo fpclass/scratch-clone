@@ -1,6 +1,10 @@
 --------------------------------------------------------------------------------
--- Functional Programming (CS141)                                             --
--- Coursework 2: Scratch clone                                                --
+-- Functional Programming - Scratch Clone Project
+--------------------------------------------------------------------------------
+-- Copyright (c) 2022 Michael B. Gale (michael@fpclass.online)
+--
+-- This source code is subject to the terms and conditions found in the LICENSE
+-- file in the root directory of this source tree.
 --------------------------------------------------------------------------------
 
 {-# LANGUAGE ScopedTypeVariables #-}
@@ -50,10 +54,10 @@ hasMemory :: Memory -> Either Err Memory -> Bool
 hasMemory xs (Right ys) = all (`elem` ys) xs
 hasMemory _  _          = False
 
--- | `terminates` @result@ essentially does nothing except pattern-match on 
+-- | `terminates` @result@ essentially does nothing except pattern-match on
 -- @result@. If pattern-matching succeeds (i.e. the computation calculating
 -- the argument terminates), `True` is returned.
-terminates :: Either a b -> Bool 
+terminates :: Either a b -> Bool
 terminates (Left _)  = True
 terminates (Right _) = True
 
@@ -127,7 +131,7 @@ fib n =
 
 -- | The tests.
 tests :: TestTree
-tests = localOption (Timeout (5*1000000) "5s") $ testGroup "Interpreter.interpret" 
+tests = localOption (Timeout (5*1000000) "5s") $ testGroup "Interpreter.interpret"
     [
         testCase "handles the empty program" $
         isSuccessful (interpret [] []) @?= True
@@ -231,7 +235,7 @@ tests = localOption (Timeout (5*1000000) "5s") $ testGroup "Interpreter.interpre
         ]
     ]
 
--- | The list of tasty ingredients. Note: the order seems to matter, 
+-- | The list of tasty ingredients. Note: the order seems to matter,
 -- anyXMLRunner won't work at all if placed last in the list.
 ingredients :: [Ingredient]
 ingredients = [antXMLRunner, listingTests, consoleTestReporter]

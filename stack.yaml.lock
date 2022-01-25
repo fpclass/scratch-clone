@@ -3,10 +3,21 @@
 # For more information, please see the documentation at:
 #   https://docs.haskellstack.org/en/stable/lock_files
 
-packages: []
+packages:
+- completed:
+    name: tasty-hedgehog
+    version: 1.0.0.2
+    git: https://github.com/mbg/tasty-hedgehog
+    pantry-tree:
+      size: 916
+      sha256: d709950962551976cc6fa41f53e3b9c11a6ad106e8f7dbbfe227daa765e89fed
+    commit: ceadcd78cf96ef2a0fb63d353aaa43f2e51b40a8
+  original:
+    git: https://github.com/mbg/tasty-hedgehog
+    commit: ceadcd78cf96ef2a0fb63d353aaa43f2e51b40a8
 snapshots:
 - completed:
-    size: 533252
-    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/16/27.yaml
-    sha256: c2aaae52beeacf6a5727c1010f50e89d03869abfab6d2c2658ade9da8ed50c73
-  original: lts-16.27
+    size: 586106
+    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/18/20.yaml
+    sha256: 8699812d2b2c1f83d6ad1261de9cf628ed36a1cfc14f19d67188e005e7a3a39d
+  original: lts-18.20

@@ -4,12 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Scratch Clone - CS141</title>
-    <script src="static/jquery-3.2.1.min.js"></script>
-    <script src="static/google-blockly/blockly_compressed.js"></script>
-    <script src="static/google-blockly/blocks_compressed.js"></script>
-    <script src="static/google-blockly/msg/js/en.js"></script>
-    <script src="static/FileSaver.js"></script>
+    <title>Scratch Clone</title>
+    <script
+        src="https://unpkg.com/jquery@3.6.0/dist/jquery.js"
+        integrity="sha384-S58meLBGKxIiQmJ/pJ8ilvFUcGcqgla+mWH9EEKGm6i6rKxSTA2kpXJQJ8n7XK4w"
+        crossorigin="anonymous"
+    ></script>
+    <script
+        type="application/javascript"
+        src="https://unpkg.com/blockly@7.20211209.2/blockly.min.js"
+        integrity="sha384-mfKsT64BRP7vhBQMlY3D53PCLcbhTK91PDTC/FcapHdJJB+/1sDSLfahINR6z3MA"
+        crossorigin="anonymous"
+    ></script>
+    <script
+        type="application/javascript"
+        src="https://unpkg.com/file-saver@2.0.5/dist/FileSaver.min.js"
+        integrity="sha384-PlRSzpewlarQuj5alIadXwjNUX+2eNMKwr0f07ShWYLy8B6TjEbm7ZlcN/ScSbwy"
+        crossorigin="anonymous"
+    ></script>
     <link rel="stylesheet" type="text/css" href="static/index.css">
 </head>
 <body>
@@ -23,7 +35,7 @@
         </span>
         <button id="runButton">Evaluate</button>
     </header>
-    
+
     <main id="blocklyDiv"></main>
 
     <div id="output">
@@ -36,7 +48,7 @@
             <block type="controls_if"></block>
             <block type="controls_repeat_ext"></block>
         </category>
-        <category name="Maths" colour="">
+        <category name="Maths" colour="150">
             <block type="math_number"></block>
             <block type="math_arithmetic"></block>
         </category>
