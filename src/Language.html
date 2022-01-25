@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span id="%24maxtag_3oRm0ZAG18X8S2kwas8Y31"><span id="%24tag2con_3oRm0ZAG18X8S2kwas8Y31"><span id="%24con2tag_3oRm0ZAG18X8S2kwas8Y31"></span></span></span><span class="hs-comment">--------------------------------------------------------------------------------</span><span>
+</span><span id="line-2"></span><span class="hs-comment">-- Functional Programming - Scratch Clone Project</span><span>
+</span><span id="line-3"></span><span class="hs-comment">--------------------------------------------------------------------------------</span><span>
+</span><span id="line-4"></span><span class="hs-comment">-- Copyright (c) 2022 Michael B. Gale (michael@fpclass.online)</span><span>
+</span><span id="line-5"></span><span class="hs-comment">--</span><span>
+</span><span id="line-6"></span><span class="hs-comment">-- This source code is subject to the terms and conditions found in the LICENSE</span><span>
+</span><span id="line-7"></span><span class="hs-comment">-- file in the root directory of this source tree.</span><span>
+</span><span id="line-8"></span><span class="hs-comment">--------------------------------------------------------------------------------</span><span>
+</span><span id="line-9"></span><span>
+</span><span id="line-10"></span><span class="hs-comment">-- | This module contains the types for the abstract syntax tree.</span><span>
+</span><span id="line-11"></span><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Language</span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-12"></span><span>
+</span><span id="line-13"></span><span class="hs-comment">--------------------------------------------------------------------------------</span><span>
+</span><span id="line-14"></span><span>
+</span><span id="line-15"></span><span class="hs-comment">-- | A program consists of a sequence of statements.</span><span>
+</span><span id="line-16"></span><span class="hs-keyword">type</span><span> </span><span id="Program"><span class="annot"><a href="Language.html#Program"><span class="hs-identifier hs-var">Program</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Language.html#Stmt"><span class="hs-identifier hs-type">Stmt</span></a></span><span class="hs-special">]</span><span>
+</span><span id="line-17"></span><span>
+</span><span id="line-18"></span><span class="hs-comment">-- | A program is a sequence of statements.</span><span>
+</span><span id="line-19"></span><span class="hs-keyword">data</span><span> </span><span id="Stmt"><span class="annot"><a href="Language.html#Stmt"><span class="hs-identifier hs-var">Stmt</span></a></span></span><span>
+</span><span id="line-20"></span><span>    </span><span class="hs-glyph">=</span><span> </span><span id="AssignStmt"><span class="annot"><a href="Language.html#AssignStmt"><span class="hs-identifier hs-var">AssignStmt</span></a></span></span><span> </span><span class="hs-special">{</span><span>
+</span><span id="line-21"></span><span>        </span><span id="assignVar"><span class="annot"><span class="annottext">Stmt -&gt; String
+</span><a href="Language.html#assignVar"><span class="hs-identifier hs-var hs-var">assignVar</span></a></span></span><span>  </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">,</span><span>
+</span><span id="line-22"></span><span>        </span><span id="assignExpr"><span class="annot"><span class="annottext">Stmt -&gt; Expr
+</span><a href="Language.html#assignExpr"><span class="hs-identifier hs-var hs-var">assignExpr</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Language.html#Expr"><span class="hs-identifier hs-type">Expr</span></a></span><span>
+</span><span id="line-23"></span><span>    </span><span class="hs-special">}</span><span>
+</span><span id="line-24"></span><span>    </span><span class="hs-glyph">|</span><span> </span><span id="IfStmt"><span class="annot"><a href="Language.html#IfStmt"><span class="hs-identifier hs-var">IfStmt</span></a></span></span><span> </span><span class="hs-special">{</span><span>
+</span><span id="line-25"></span><span>        </span><span id="ifCond"><span class="annot"><span class="annottext">Stmt -&gt; Expr
+</span><a href="Language.html#ifCond"><span class="hs-identifier hs-var hs-var">ifCond</span></a></span></span><span>   </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Language.html#Expr"><span class="hs-identifier hs-type">Expr</span></a></span><span class="hs-special">,</span><span>
+</span><span id="line-26"></span><span>        </span><span id="ifBody"><span class="annot"><span class="annottext">Stmt -&gt; [Stmt]
+</span><a href="Language.html#ifBody"><span class="hs-identifier hs-var hs-var">ifBody</span></a></span></span><span>   </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Language.html#Stmt"><span class="hs-identifier hs-type">Stmt</span></a></span><span class="hs-special">]</span><span class="hs-special">,</span><span>
+</span><span id="line-27"></span><span>        </span><span id="ifElseIf"><span class="annot"><span class="annottext">Stmt -&gt; [(Expr, [Stmt])]
+</span><a href="Language.html#ifElseIf"><span class="hs-identifier hs-var hs-var">ifElseIf</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="hs-special">(</span><span class="annot"><a href="Language.html#Expr"><span class="hs-identifier hs-type">Expr</span></a></span><span class="hs-special">,</span><span class="hs-special">[</span><span class="annot"><a href="Language.html#Stmt"><span class="hs-identifier hs-type">Stmt</span></a></span><span class="hs-special">]</span><span class="hs-special">)</span><span class="hs-special">]</span><span class="hs-special">,</span><span>
+</span><span id="line-28"></span><span>        </span><span id="ifElse"><span class="annot"><span class="annottext">Stmt -&gt; [Stmt]
+</span><a href="Language.html#ifElse"><span class="hs-identifier hs-var hs-var">ifElse</span></a></span></span><span>   </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Language.html#Stmt"><span class="hs-identifier hs-type">Stmt</span></a></span><span class="hs-special">]</span><span>
+</span><span id="line-29"></span><span>    </span><span class="hs-special">}</span><span>
+</span><span id="line-30"></span><span>    </span><span class="hs-glyph">|</span><span> </span><span id="RepeatStmt"><span class="annot"><a href="Language.html#RepeatStmt"><span class="hs-identifier hs-var">RepeatStmt</span></a></span></span><span> </span><span class="hs-special">{</span><span>
+</span><span id="line-31"></span><span>        </span><span id="repeatTimesExpr"><span class="annot"><span class="annottext">Stmt -&gt; Expr
+</span><a href="Language.html#repeatTimesExpr"><span class="hs-identifier hs-var hs-var">repeatTimesExpr</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Language.html#Expr"><span class="hs-identifier hs-type">Expr</span></a></span><span class="hs-special">,</span><span>
+</span><span id="line-32"></span><span>        </span><span id="repeatBody"><span class="annot"><span class="annottext">Stmt -&gt; [Stmt]
+</span><a href="Language.html#repeatBody"><span class="hs-identifier hs-var hs-var">repeatBody</span></a></span></span><span>      </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Language.html#Stmt"><span class="hs-identifier hs-type">Stmt</span></a></span><span class="hs-special">]</span><span>
+</span><span id="line-33"></span><span>    </span><span class="hs-special">}</span><span>
+</span><span id="line-34"></span><span>    </span><span class="hs-keyword">deriving</span><span> </span><span id="local-6989586621679030523"><span id="local-6989586621679030525"><span id="local-6989586621679030527"><span class="annot"><span class="annottext">Int -&gt; Stmt -&gt; ShowS
+[Stmt] -&gt; ShowS
+Stmt -&gt; String
+(Int -&gt; Stmt -&gt; ShowS)
+-&gt; (Stmt -&gt; String) -&gt; ([Stmt] -&gt; ShowS) -&gt; Show Stmt
+forall a.
+(Int -&gt; a -&gt; ShowS) -&gt; (a -&gt; String) -&gt; ([a] -&gt; ShowS) -&gt; Show a
+showList :: [Stmt] -&gt; ShowS
+$cshowList :: [Stmt] -&gt; ShowS
+show :: Stmt -&gt; String
+$cshow :: Stmt -&gt; String
+showsPrec :: Int -&gt; Stmt -&gt; ShowS
+$cshowsPrec :: Int -&gt; Stmt -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span>
+</span><span id="line-35"></span><span>
+</span><span id="line-36"></span><span class="hs-comment">--------------------------------------------------------------------------------</span><span>
+</span><span id="line-37"></span><span>
+</span><span id="line-38"></span><span class="hs-comment">-- | Operators.</span><span>
+</span><span id="line-39"></span><span class="hs-keyword">data</span><span> </span><span id="Op"><span class="annot"><a href="Language.html#Op"><span class="hs-identifier hs-var">Op</span></a></span></span><span>
+</span><span id="line-40"></span><span>    </span><span class="hs-glyph">=</span><span> </span><span id="Add"><span class="annot"><a href="Language.html#Add"><span class="hs-identifier hs-var">Add</span></a></span></span><span>                               </span><span class="hs-comment">-- ^ The + operator.</span><span>
+</span><span id="line-41"></span><span>    </span><span class="hs-glyph">|</span><span> </span><span id="Sub"><span class="annot"><a href="Language.html#Sub"><span class="hs-identifier hs-var">Sub</span></a></span></span><span>                               </span><span class="hs-comment">-- ^ The - operator.</span><span>
+</span><span id="line-42"></span><span>    </span><span class="hs-glyph">|</span><span> </span><span id="Mul"><span class="annot"><a href="Language.html#Mul"><span class="hs-identifier hs-var">Mul</span></a></span></span><span>                               </span><span class="hs-comment">-- ^ The * operator.</span><span>
+</span><span id="line-43"></span><span>    </span><span class="hs-glyph">|</span><span> </span><span id="Div"><span class="annot"><a href="Language.html#Div"><span class="hs-identifier hs-var">Div</span></a></span></span><span>                               </span><span class="hs-comment">-- ^ The / operator.</span><span>
+</span><span id="line-44"></span><span>    </span><span class="hs-glyph">|</span><span> </span><span id="Pow"><span class="annot"><a href="Language.html#Pow"><span class="hs-identifier hs-var">Pow</span></a></span></span><span>                               </span><span class="hs-comment">-- ^ The power of operator.</span><span>
+</span><span id="line-45"></span><span>    </span><span class="hs-glyph">|</span><span> </span><span id="Equal"><span class="annot"><a href="Language.html#Equal"><span class="hs-identifier hs-var">Equal</span></a></span></span><span>                             </span><span class="hs-comment">-- ^ The == operator.</span><span>
+</span><span id="line-46"></span><span>    </span><span class="hs-glyph">|</span><span> </span><span id="Neq"><span class="annot"><a href="Language.html#Neq"><span class="hs-identifier hs-var">Neq</span></a></span></span><span>                               </span><span class="hs-comment">-- ^ The /= operator.</span><span>
+</span><span id="line-47"></span><span>    </span><span class="hs-glyph">|</span><span> </span><span id="LessThan"><span class="annot"><a href="Language.html#LessThan"><span class="hs-identifier hs-var">LessThan</span></a></span></span><span>                          </span><span class="hs-comment">-- ^ The &lt; operator.</span><span>
+</span><span id="line-48"></span><span>    </span><span class="hs-glyph">|</span><span> </span><span id="LessOrEqual"><span class="annot"><a href="Language.html#LessOrEqual"><span class="hs-identifier hs-var">LessOrEqual</span></a></span></span><span>                       </span><span class="hs-comment">-- ^ The &lt;= operator.</span><span>
+</span><span id="line-49"></span><span>    </span><span class="hs-glyph">|</span><span> </span><span id="GreaterThan"><span class="annot"><a href="Language.html#GreaterThan"><span class="hs-identifier hs-var">GreaterThan</span></a></span></span><span>                       </span><span class="hs-comment">-- ^ The &gt; operator.</span><span>
+</span><span id="line-50"></span><span>    </span><span class="hs-glyph">|</span><span> </span><span id="GreaterOrEqual"><span class="annot"><a href="Language.html#GreaterOrEqual"><span class="hs-identifier hs-var">GreaterOrEqual</span></a></span></span><span>                    </span><span class="hs-comment">-- ^ The &gt;= operator.</span><span>
+</span><span id="line-51"></span><span>    </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679030507"><span id="local-6989586621679030509"><span class="annot"><span class="annottext">Op -&gt; Op -&gt; Bool
+(Op -&gt; Op -&gt; Bool) -&gt; (Op -&gt; Op -&gt; Bool) -&gt; Eq Op
+forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
+/= :: Op -&gt; Op -&gt; Bool
+$c/= :: Op -&gt; Op -&gt; Bool
+== :: Op -&gt; Op -&gt; Bool
+$c== :: Op -&gt; Op -&gt; Bool
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679030490"><span id="local-6989586621679030492"><span id="local-6989586621679030494"><span id="local-6989586621679030496"><span id="local-6989586621679030498"><span id="local-6989586621679030500"><span id="local-6989586621679030502"><span id="local-6989586621679030504"><span class="annot"><span class="annottext">Int -&gt; Op
+Op -&gt; Int
+Op -&gt; [Op]
+Op -&gt; Op
+Op -&gt; Op -&gt; [Op]
+Op -&gt; Op -&gt; Op -&gt; [Op]
+(Op -&gt; Op)
+-&gt; (Op -&gt; Op)
+-&gt; (Int -&gt; Op)
+-&gt; (Op -&gt; Int)
+-&gt; (Op -&gt; [Op])
+-&gt; (Op -&gt; Op -&gt; [Op])
+-&gt; (Op -&gt; Op -&gt; [Op])
+-&gt; (Op -&gt; Op -&gt; Op -&gt; [Op])
+-&gt; Enum Op
+forall a.
+(a -&gt; a)
+-&gt; (a -&gt; a)
+-&gt; (Int -&gt; a)
+-&gt; (a -&gt; Int)
+-&gt; (a -&gt; [a])
+-&gt; (a -&gt; a -&gt; [a])
+-&gt; (a -&gt; a -&gt; [a])
+-&gt; (a -&gt; a -&gt; a -&gt; [a])
+-&gt; Enum a
+enumFromThenTo :: Op -&gt; Op -&gt; Op -&gt; [Op]
+$cenumFromThenTo :: Op -&gt; Op -&gt; Op -&gt; [Op]
+enumFromTo :: Op -&gt; Op -&gt; [Op]
+$cenumFromTo :: Op -&gt; Op -&gt; [Op]
+enumFromThen :: Op -&gt; Op -&gt; [Op]
+$cenumFromThen :: Op -&gt; Op -&gt; [Op]
+enumFrom :: Op -&gt; [Op]
+$cenumFrom :: Op -&gt; [Op]
+fromEnum :: Op -&gt; Int
+$cfromEnum :: Op -&gt; Int
+toEnum :: Int -&gt; Op
+$ctoEnum :: Int -&gt; Op
+pred :: Op -&gt; Op
+$cpred :: Op -&gt; Op
+succ :: Op -&gt; Op
+$csucc :: Op -&gt; Op
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Enum</span></span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679030485"><span id="local-6989586621679030487"><span class="annot"><span class="annottext">Op
+Op -&gt; Op -&gt; Bounded Op
+forall a. a -&gt; a -&gt; Bounded a
+maxBound :: Op
+$cmaxBound :: Op
+minBound :: Op
+$cminBound :: Op
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Bounded</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679030478"><span id="local-6989586621679030480"><span id="local-6989586621679030482"><span class="annot"><span class="annottext">Int -&gt; Op -&gt; ShowS
+[Op] -&gt; ShowS
+Op -&gt; String
+(Int -&gt; Op -&gt; ShowS)
+-&gt; (Op -&gt; String) -&gt; ([Op] -&gt; ShowS) -&gt; Show Op
+forall a.
+(Int -&gt; a -&gt; ShowS) -&gt; (a -&gt; String) -&gt; ([a] -&gt; ShowS) -&gt; Show a
+showList :: [Op] -&gt; ShowS
+$cshowList :: [Op] -&gt; ShowS
+show :: Op -&gt; String
+$cshow :: Op -&gt; String
+showsPrec :: Int -&gt; Op -&gt; ShowS
+$cshowsPrec :: Int -&gt; Op -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">)</span><span>
+</span><span id="line-52"></span><span>
+</span><span id="line-53"></span><span class="hs-comment">-- | Expressions.</span><span>
+</span><span id="line-54"></span><span class="hs-keyword">data</span><span> </span><span id="Expr"><span class="annot"><a href="Language.html#Expr"><span class="hs-identifier hs-var">Expr</span></a></span></span><span>
+</span><span id="line-55"></span><span>    </span><span class="hs-glyph">=</span><span> </span><span id="ValE"><span class="annot"><a href="Language.html#ValE"><span class="hs-identifier hs-var">ValE</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Int</span></span><span>
+</span><span id="line-56"></span><span>    </span><span class="hs-glyph">|</span><span> </span><span id="VarE"><span class="annot"><a href="Language.html#VarE"><span class="hs-identifier hs-var">VarE</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-57"></span><span>    </span><span class="hs-glyph">|</span><span> </span><span id="BinOpE"><span class="annot"><a href="Language.html#BinOpE"><span class="hs-identifier hs-var">BinOpE</span></a></span></span><span> </span><span class="annot"><a href="Language.html#Op"><span class="hs-identifier hs-type">Op</span></a></span><span> </span><span class="annot"><a href="Language.html#Expr"><span class="hs-identifier hs-type">Expr</span></a></span><span> </span><span class="annot"><a href="Language.html#Expr"><span class="hs-identifier hs-type">Expr</span></a></span><span>
+</span><span id="line-58"></span><span>    </span><span class="hs-keyword">deriving</span><span> </span><span id="local-6989586621679030469"><span id="local-6989586621679030471"><span id="local-6989586621679030473"><span class="annot"><span class="annottext">Int -&gt; Expr -&gt; ShowS
+[Expr] -&gt; ShowS
+Expr -&gt; String
+(Int -&gt; Expr -&gt; ShowS)
+-&gt; (Expr -&gt; String) -&gt; ([Expr] -&gt; ShowS) -&gt; Show Expr
+forall a.
+(Int -&gt; a -&gt; ShowS) -&gt; (a -&gt; String) -&gt; ([a] -&gt; ShowS) -&gt; Show a
+showList :: [Expr] -&gt; ShowS
+$cshowList :: [Expr] -&gt; ShowS
+show :: Expr -&gt; String
+$cshow :: Expr -&gt; String
+showsPrec :: Int -&gt; Expr -&gt; ShowS
+$cshowsPrec :: Int -&gt; Expr -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span>
+</span><span id="line-59"></span><span>
+</span><span id="line-60"></span><span class="hs-comment">--------------------------------------------------------------------------------</span><span>
+</span><span id="line-61"></span></pre></body></html>

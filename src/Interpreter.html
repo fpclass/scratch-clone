@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span class="hs-comment">--------------------------------------------------------------------------------</span><span>
+</span><span id="line-2"></span><span class="hs-comment">-- Functional Programming - Scratch Clone Project</span><span>
+</span><span id="line-3"></span><span class="hs-comment">--------------------------------------------------------------------------------</span><span>
+</span><span id="line-4"></span><span class="hs-comment">-- Copyright (c) 2022 Michael B. Gale (michael@fpclass.online)</span><span>
+</span><span id="line-5"></span><span class="hs-comment">--</span><span>
+</span><span id="line-6"></span><span class="hs-comment">-- This source code is subject to the terms and conditions found in the LICENSE</span><span>
+</span><span id="line-7"></span><span class="hs-comment">-- file in the root directory of this source tree.</span><span>
+</span><span id="line-8"></span><span class="hs-comment">--------------------------------------------------------------------------------</span><span>
+</span><span id="line-9"></span><span>
+</span><span id="line-10"></span><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Interpreter</span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-11"></span><span>
+</span><span id="line-12"></span><span class="hs-comment">--------------------------------------------------------------------------------</span><span>
+</span><span id="line-13"></span><span>
+</span><span id="line-14"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="Language.html"><span class="hs-identifier">Language</span></a></span><span>
+</span><span id="line-15"></span><span>
+</span><span id="line-16"></span><span class="hs-comment">--------------------------------------------------------------------------------</span><span>
+</span><span id="line-17"></span><span>
+</span><span id="line-18"></span><span class="hs-comment">-- | In our memory, named locations map to values.</span><span>
+</span><span id="line-19"></span><span class="hs-keyword">type</span><span> </span><span id="Memory"><span class="annot"><a href="Interpreter.html#Memory"><span class="hs-identifier hs-var">Memory</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">[</span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Int</span></span><span class="hs-special">)</span><span class="hs-special">]</span><span>
+</span><span id="line-20"></span><span>
+</span><span id="line-21"></span><span class="hs-comment">-- | Enumerates reasons for errors.</span><span>
+</span><span id="line-22"></span><span class="hs-keyword">data</span><span> </span><span id="Err"><span class="annot"><a href="Interpreter.html#Err"><span class="hs-identifier hs-var">Err</span></a></span></span><span>
+</span><span id="line-23"></span><span>    </span><span class="hs-glyph">=</span><span> </span><span id="DivByZeroError"><span class="annot"><a href="Interpreter.html#DivByZeroError"><span class="hs-identifier hs-var">DivByZeroError</span></a></span></span><span>                    </span><span class="hs-comment">-- ^ Division by zero was attempted.</span><span>
+</span><span id="line-24"></span><span>    </span><span class="hs-glyph">|</span><span> </span><span id="NegativeExponentError"><span class="annot"><a href="Interpreter.html#NegativeExponentError"><span class="hs-identifier hs-var">NegativeExponentError</span></a></span></span><span>             </span><span class="hs-comment">-- ^ Raising a number to a negative</span><span>
+</span><span id="line-25"></span><span>                                        </span><span class="hs-comment">-- exponent was attempted.</span><span>
+</span><span id="line-26"></span><span>    </span><span class="hs-glyph">|</span><span> </span><span id="UninitialisedMemory"><span class="annot"><a href="Interpreter.html#UninitialisedMemory"><span class="hs-identifier hs-var">UninitialisedMemory</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>        </span><span class="hs-comment">-- ^ Tried to read from a variable</span><span>
+</span><span id="line-27"></span><span>                                        </span><span class="hs-comment">-- that does not exist.</span><span>
+</span><span id="line-28"></span><span>    </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679030565"><span id="local-6989586621679030567"><span class="annot"><span class="annottext">Err -&gt; Err -&gt; Bool
+(Err -&gt; Err -&gt; Bool) -&gt; (Err -&gt; Err -&gt; Bool) -&gt; Eq Err
+forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
+/= :: Err -&gt; Err -&gt; Bool
+$c/= :: Err -&gt; Err -&gt; Bool
+== :: Err -&gt; Err -&gt; Bool
+$c== :: Err -&gt; Err -&gt; Bool
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679030558"><span id="local-6989586621679030560"><span id="local-6989586621679030562"><span class="annot"><span class="annottext">Int -&gt; Err -&gt; ShowS
+[Err] -&gt; ShowS
+Err -&gt; String
+(Int -&gt; Err -&gt; ShowS)
+-&gt; (Err -&gt; String) -&gt; ([Err] -&gt; ShowS) -&gt; Show Err
+forall a.
+(Int -&gt; a -&gt; ShowS) -&gt; (a -&gt; String) -&gt; ([a] -&gt; ShowS) -&gt; Show a
+showList :: [Err] -&gt; ShowS
+$cshowList :: [Err] -&gt; ShowS
+show :: Err -&gt; String
+$cshow :: Err -&gt; String
+showsPrec :: Int -&gt; Err -&gt; ShowS
+$cshowsPrec :: Int -&gt; Err -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">)</span><span>
+</span><span id="line-29"></span><span>
+</span><span id="line-30"></span><span class="hs-comment">--------------------------------------------------------------------------------</span><span>
+</span><span id="line-31"></span><span>
+</span><span id="line-32"></span><span class="hs-comment">-- | Given a program and the initial memory contents, determines</span><span>
+</span><span id="line-33"></span><span class="hs-comment">-- what evaluating the program does to the memory.</span><span>
+</span><span id="line-34"></span><span class="annot"><a href="Interpreter.html#interpret"><span class="hs-identifier hs-type">interpret</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Language.html#Program"><span class="hs-identifier hs-type">Program</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Interpreter.html#Memory"><span class="hs-identifier hs-type">Memory</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Either</span></span><span> </span><span class="annot"><a href="Interpreter.html#Err"><span class="hs-identifier hs-type">Err</span></a></span><span> </span><span class="annot"><a href="Interpreter.html#Memory"><span class="hs-identifier hs-type">Memory</span></a></span><span>
+</span><span id="line-35"></span><span id="interpret"><span class="annot"><span class="annottext">interpret :: Program -&gt; Memory -&gt; Either Err Memory
+</span><a href="Interpreter.html#interpret"><span class="hs-identifier hs-var hs-var">interpret</span></a></span></span><span> </span><span id="local-6989586621679030555"><span class="annot"><span class="annottext">Program
+</span><a href="#local-6989586621679030555"><span class="hs-identifier hs-var">p</span></a></span></span><span> </span><span id="local-6989586621679030554"><span class="annot"><span class="annottext">Memory
+</span><a href="#local-6989586621679030554"><span class="hs-identifier hs-var">mem</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Either Err Memory
+forall a. HasCallStack =&gt; a
+</span><span class="hs-identifier hs-var">undefined</span></span><span>
+</span><span id="line-36"></span><span>
+</span><span id="line-37"></span><span class="hs-comment">--------------------------------------------------------------------------------</span><span>
+</span><span id="line-38"></span></pre></body></html>
