@@ -1,4 +1,4 @@
-name: build
+name: "Haskell"
 
 on:
   push:
@@ -18,6 +18,12 @@ on:
 
 jobs:
   build:
+    name: "Build and Test"
+
+    permissions:
+      contents: read
+      pages: read
+
     strategy:
       matrix:
         resolver:
@@ -26,7 +32,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: "Clone repository"
+        uses: actions/checkout@v4
+
+      - name: "Setup GitHub Pages"
+        id: pages
+        uses: actions/configure-pages@v5
+        if: |
+          github.ref == 'refs/heads/main' &&
+          github.repository_owner == 'fpclass'
 
       - name: Install Haskell
         id: "install-haskell"
@@ -55,12 +69,13 @@ jobs:
         run: |
           stack --system-ghc --stack-yaml=${{ matrix.resolver }}.yaml --no-terminal build --fast --test --bench --haddock --no-run-tests --no-run-benchmarks
 
-      - name: Deploy documentation
-        if: ${{ github.ref == 'refs/heads/main' }}
-        uses: JamesIves/github-pages-deploy-action@v4.6.0
+      - name: "Upload GitHub Pages Artifact"
+        uses: actions/upload-pages-artifact@v3
+        if: |
+          github.ref == 'refs/heads/main' &&
+          github.repository_owner == 'fpclass'
         with:
-          branch: haddock
-          folder: docs
+          path: "docs/"
 
     ### uncomment the following lines in order to run the tests every time you
     ### push to your repository
@@ -69,3 +84,23 @@ jobs:
     #   id: test
     #   run: |
     #     stack --system-ghc --stack-yaml=${{ matrix.resolver }}.yaml --no-terminal build --fast --test
+
+  deploy:
+    name: "Deploy Documentation"
+    runs-on: "ubuntu-latest"
+    if: |
+      github.ref == 'refs/heads/main' &&
+      github.repository_owner == 'fpclass'
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: "Deploy to GitHub Pages"
+        id: deployment
+        uses: actions/deploy-pages@v4
